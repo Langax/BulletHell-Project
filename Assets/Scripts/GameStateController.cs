@@ -38,12 +38,14 @@ public class GameStateController : MonoBehaviour
         {
             if (enemyCount < maxEnemies)
             {
-                Vector3 pos = new Vector3(Random.Range(-10, 10) + player.transform.position.x, 0, Random.Range(-10, 10) + player.transform.position.z);
+                Vector3 direction = Random.insideUnitCircle.normalized;
+                float dist = Random.Range(20, 30);
+                Vector3 pos = player.transform.position + new Vector3(direction.x, 0, direction.y) * dist;
+                
                 Instantiate(enemyPrefab, pos, Quaternion.identity);
                 enemyCount++;
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
         }
     }
-
 }
