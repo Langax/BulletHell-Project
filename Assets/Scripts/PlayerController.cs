@@ -22,15 +22,8 @@ public class PlayerController : MonoBehaviour
         Vector3 velocity = movementDirection * (movementSpeed * Time.deltaTime);
         rb.linearVelocity = new Vector3(velocity.x, 0.0f, velocity.z);
 
-        if (movementDirection.sqrMagnitude > 0.1f)
-        {
-            Quaternion rotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-            rb.MoveRotation(rotation);
-        }
-        else
-        {
-            rb.angularVelocity = Vector3.zero;
-        }
+  
+        rb.rotation = Quaternion.Euler(0.0f, cameraTransform.rotation.y, 0.0f);
     }
 
     public void Move(InputAction.CallbackContext context)
