@@ -696,6 +696,7 @@ GameObject:
   - component: {fileID: 964358775}
   - component: {fileID: 964358774}
   - component: {fileID: 964358781}
+  - component: {fileID: 964358782}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -749,7 +750,19 @@ MonoBehaviour:
     m_ActionId: ba2bed3d-1de5-41f1-97ed-23b6745e675f
     m_ActionName: 'Player/Jump[/Keyboard/space]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 964358775}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5e3d218c-eba3-48a6-bed7-55be8280a07b
     m_ActionName: 'Player/Attack[/Mouse/leftButton]'
   - m_PersistentCalls:
@@ -905,6 +918,27 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964358773}
   m_Enabled: 1
+--- !u!65 &964358782
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964358773}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.7466059, y: 2, z: 2.7184727}
+  m_Center: {x: -0.02005601, y: 0, z: 1.4388679}
 --- !u!1 &986582144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1191,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 79b4762afe9a02b4f9ad8611981de935, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 29314f3f45f80d747a7c3649a7e0b868, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1612089876
 Transform:
