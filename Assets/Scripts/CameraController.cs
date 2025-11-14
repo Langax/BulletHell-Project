@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     public Vector3 offset = new Vector3(0, 2, -10);
 
     private float turnDelta;
-    private float sens = 2f;
+    private float sens = 5f;
 
     void Update()
     {

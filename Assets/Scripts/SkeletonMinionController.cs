@@ -1,24 +1,15 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SkeletonMinionController : MonoBehaviour
+public class SkeletonMinionController : BaseEnemyAI
 {
-    private GameObject player;
-    private NavMeshAgent agent;
-    public int expValue = 10;
-    
-    void Start()
+    private void Update()
     {
-        agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Player");
-    }
-
-    void Update()
-    {
-        if (player)
+        MoveToPlayer();
+        if (CheckDistance())
         {
-            transform.LookAt(player.transform);
-            agent.SetDestination(player.transform.position);
+            Debug.Log("Player is in range, attacking!");
+            StartCoroutine(Attack());
         }
     }
 }
