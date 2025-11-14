@@ -1,24 +1,28 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SkeletonMinionController : MonoBehaviour
+public class SkeletonMinionController : BaseEnemyAI
 {
-    private GameObject player;
-    private NavMeshAgent agent;
-    public int expValue = 10;
+    private float attackCooldown = 0f;
     
-    void Start()
+    
+    private void Update()
     {
-        agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Player");
-    }
-
-    void Update()
-    {
-        if (player)
+        attackCooldown -= Time.deltaTime;
+        
+        MoveToPlayer();
+        if (CheckDistance() && attackCooldown <= 0f)
         {
-            transform.LookAt(player.transform);
-            agent.SetDestination(player.transform.position);
+            StartCoroutine(Attack());
+            attackCooldown = 3f;
         }
+    }
+    
+    private void OnDrawGizmos()
+    {
+        Vector3 attackCenter = transform.position + transform.forward * 1.5f;
+        float attackRadius = 1.5f;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackCenter, attackRadius);
     }
 }

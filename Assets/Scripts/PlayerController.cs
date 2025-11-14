@@ -9,9 +9,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movementDirection;
     private Vector3 input;
-    private BoxCollider aoe;
     private float cooldown = 0;
-    private int exp, level;
+    private int exp, level, expToNextLevel;
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
@@ -20,10 +19,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        aoe = GetComponent<BoxCollider>();
-        aoe.enabled = false;
         exp = 0;
         level = 1;
+        expToNextLevel = 100;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -41,21 +39,6 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(velocity.x, 0.0f, velocity.z);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            other.gameObject.SetActive(false);
-            exp += other.gameObject.GetComponent<SkeletonMinionController>().expValue;
-            Debug.Log("exp: " + exp);
-            if (exp >= 100)
-            {
-                levelUp();
-            }
-            // other.takeDamage();
-        }
-    }
-
     public void Move(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector3>();
@@ -65,21 +48,43 @@ public class PlayerController : MonoBehaviour
     {
         if (cooldown <= 0)
         {
-            StartCoroutine(swing(0.1f));
-            cooldown = 2f;
+            Swing();
+            cooldown = 3f;
         }
     }
 
-    private IEnumerator swing(float seconds)
+    public void IncreaseExp(int amount)
     {
-        aoe.enabled = true;
-        yield return new WaitForSeconds(seconds);
-        aoe.enabled = false;
+        if (exp + amount > expToNextLevel)
+        {
+            LevelUp();
+        }
+        else
+        {
+            exp += amount;
+        }
     }
 
-    private void levelUp()
+    private void Swing()
+    {
+        float radius = 3f;
+        Vector3 center = transform.position + transform.forward * 1.5f;
+
+        Collider[] hits = Physics.OverlapSphere(center, radius);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                hit.GetComponent<BaseEnemyAI>().TakeDamage();
+            }
+        }
+    }
+
+    private void LevelUp()
     {
         level++;
+        expToNextLevel  += 50;
         Debug.Log("Level: "  + level);
     }
 }
