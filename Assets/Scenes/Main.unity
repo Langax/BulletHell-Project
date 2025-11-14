@@ -687,10 +687,9 @@ GameObject:
   - component: {fileID: 964358775}
   - component: {fileID: 964358774}
   - component: {fileID: 964358781}
-  - component: {fileID: 964358782}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 964358773}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.52, z: 0}
+  m_LocalPosition: {x: 0, y: 1.517, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -906,27 +905,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964358773}
   m_Enabled: 1
---- !u!65 &964358782
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 964358773}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.7466059, y: 2, z: 2.7184727}
-  m_Center: {x: -0.02005601, y: 0, z: 1.4388679}
 --- !u!1 &986582144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1110,63 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1258126924
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -40.348644
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -41.06976
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3774534775790510062, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4551458953915680084, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
+      propertyPath: m_Name
+      value: Skeleton_Mage
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c355a10d4ab005540bc1ae638c9dbb57, type: 3}
 --- !u!1 &1612089874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,3 +1347,4 @@ SceneRoots:
   - {fileID: 964358780}
   - {fileID: 754000863}
   - {fileID: 1032910532}
+  - {fileID: 1258126924}
