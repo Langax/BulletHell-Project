@@ -9,9 +9,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movementDirection;
     private Vector3 input;
-    private BoxCollider aoe;
     private float cooldown = 0;
-    private int exp, level;
+    private int exp, level, expToNextLevel;
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
@@ -20,10 +19,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        aoe = GetComponent<BoxCollider>();
-        aoe.enabled = false;
         exp = 0;
         level = 1;
+        expToNextLevel = 100;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -55,11 +53,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void IncreaseExp(int amount)
+    {
+        if (exp + amount > expToNextLevel)
+        {
+            LevelUp();
+        }
+        else
+        {
+            exp += amount;
+        }
+    }
+
     private void Swing()
     {
         float radius = 3f;
         Vector3 center = transform.position + transform.forward * 1.5f;
-        
+
         Collider[] hits = Physics.OverlapSphere(center, radius);
 
         foreach (Collider hit in hits)
@@ -71,9 +81,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void levelUp()
+    private void LevelUp()
     {
         level++;
+        expToNextLevel  += 50;
         Debug.Log("Level: "  + level);
     }
 }

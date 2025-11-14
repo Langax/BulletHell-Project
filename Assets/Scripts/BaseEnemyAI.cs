@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -7,22 +8,28 @@ public class BaseEnemyAI : MonoBehaviour
 {
     protected NavMeshAgent agent;
     protected GameObject player;
-    protected int range = 5;
+    protected virtual float range => 5f;
     public int expValue = 10;
 
     void Start()
     {
         player = GameObject.Find("Player");
         agent = GetComponent<NavMeshAgent>();
-        GetComponent<BoxCollider>().enabled = false;
+        agent.updateRotation = false;
     }
 
     protected void MoveToPlayer()
     {
         if (player)
         {
-            transform.LookAt(player.transform);
-            agent.SetDestination(player.transform.position);
+            if (!CheckDistance())
+            {
+                Vector3 targetPos = player.transform.position;
+                targetPos.y = transform.position.y;
+            
+                transform.LookAt(targetPos);
+                agent.SetDestination(player.transform.position);
+            }
         }
     }
 
@@ -31,35 +38,43 @@ public class BaseEnemyAI : MonoBehaviour
         if (player)
         {
             Vector3 distanceDelta = player.transform.position - transform.position;
-            if (distanceDelta.sqrMagnitude < range)
+            if (distanceDelta.sqrMagnitude < range*range)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
-    protected IEnumerator Attack()
+    protected virtual IEnumerator Attack()
     {
         Debug.Log("Enemy attacking.");
-        BoxCollider attackBox = GetComponent<BoxCollider>();
-        //attackBox.enabled = true;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        agent.isStopped = true;
+        
         yield return new WaitForSeconds(1);
-        attackBox.enabled = false;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
+        
+        float radius = 1.5f;
+        Vector3 center = transform.position + transform.forward * 1.5f;
+        Collider[] hits = Physics.OverlapSphere(center, radius);
+        
+        foreach (Collider hit in hits)
+        {
+            if (hit.CompareTag("Player"))
+            {
+                Debug.Log("Hit the player!");
+            }
+        }
+        
+        agent.isStopped = false;
     }
 
     public void TakeDamage()
     {
         Debug.Log("I took damage!");
+        //Health checks for stronger enemies here.
+        player.GetComponent<PlayerController>().IncreaseExp(expValue);
+        gameObject.SetActive(false);
     }
+
+
 }
