@@ -57,4 +57,9 @@ public class BaseEnemyAI : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
     }
+
+    public void TakeDamage()
+    {
+        Debug.Log("I took damage!");
+    }
 }

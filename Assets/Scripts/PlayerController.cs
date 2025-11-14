@@ -41,21 +41,6 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector3(velocity.x, 0.0f, velocity.z);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            other.gameObject.SetActive(false);
-            exp += other.gameObject.GetComponent<SkeletonMinionController>().expValue;
-            Debug.Log("exp: " + exp);
-            if (exp >= 100)
-            {
-                levelUp();
-            }
-            // other.takeDamage();
-        }
-    }
-
     public void Move(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector3>();
@@ -65,16 +50,25 @@ public class PlayerController : MonoBehaviour
     {
         if (cooldown <= 0)
         {
-            StartCoroutine(swing(0.1f));
-            cooldown = 2f;
+            Swing();
+            cooldown = 3f;
         }
     }
 
-    private IEnumerator swing(float seconds)
+    private void Swing()
     {
-        aoe.enabled = true;
-        yield return new WaitForSeconds(seconds);
-        aoe.enabled = false;
+        float radius = 3f;
+        Vector3 center = transform.position + transform.forward * 1.5f;
+        
+        Collider[] hits = Physics.OverlapSphere(center, radius);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                hit.GetComponent<BaseEnemyAI>().TakeDamage();
+            }
+        }
     }
 
     private void levelUp()
