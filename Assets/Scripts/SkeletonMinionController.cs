@@ -5,7 +5,7 @@ public class SkeletonMinionController : MonoBehaviour
 {
     private GameObject player;
     private NavMeshAgent agent;
-    
+    public int expValue = 10;
     
     void Start()
     {
