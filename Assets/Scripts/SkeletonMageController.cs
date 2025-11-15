@@ -31,7 +31,6 @@ public class SkeletonMageController : BaseEnemyAI
 
     protected override IEnumerator Attack()
     {
-        Debug.Log("Mage attacking.");
         agent.isStopped = true;
         
         yield return new WaitForSeconds(2);

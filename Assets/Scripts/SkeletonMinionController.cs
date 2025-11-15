@@ -15,6 +15,9 @@ public class SkeletonMinionController : BaseEnemyAI
         {
             StartCoroutine(Attack());
             attackCooldown = 3f;
+            Vector3 targetPos = player.transform.position;
+            targetPos.y = transform.position.y;
+            transform.LookAt(targetPos);
         }
     }
 }

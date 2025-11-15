@@ -8,6 +8,7 @@ public class BaseEnemyAI : MonoBehaviour
 {
     protected NavMeshAgent agent;
     protected GameObject player;
+    protected GameStateController gamestate;
     protected virtual float range => 5f;
     protected virtual int damage => 10;
     public int expValue = 10;
@@ -15,6 +16,7 @@ public class BaseEnemyAI : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        gamestate = GameObject.Find("GameState").GetComponent<GameStateController>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
     }
@@ -75,6 +77,7 @@ public class BaseEnemyAI : MonoBehaviour
         //Health checks for stronger enemies here.
         player.GetComponent<PlayerController>().IncreaseExp(expValue);
         gameObject.SetActive(false);
+        gamestate.EnemyDied();
     }
 
 

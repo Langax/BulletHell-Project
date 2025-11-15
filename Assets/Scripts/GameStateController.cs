@@ -25,7 +25,7 @@ public class GameStateController : MonoBehaviour
 
         if (enemyCount == 0)
         {
-            StartCoroutine(spawnMaxEnemies());
+            StartCoroutine(SpawnMaxEnemies());
         }
         
         if (nowTime - timeSinceIncrease > 60)
@@ -35,7 +35,7 @@ public class GameStateController : MonoBehaviour
         }
     }
 
-    IEnumerator spawnMaxEnemies()
+    IEnumerator SpawnMaxEnemies()
     {
         while(true)
         {
@@ -48,9 +48,12 @@ public class GameStateController : MonoBehaviour
                 Instantiate(enemyPrefab, pos, Quaternion.identity);
                 enemyCount++;
             }
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
         }
     }
-    
-    // todo: update this to reduce the enemy count when a skeleton is killed.
+
+    public void EnemyDied()
+    {
+        enemyCount--;
+    }
 }
