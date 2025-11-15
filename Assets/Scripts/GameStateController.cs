@@ -16,7 +16,6 @@ public class GameStateController : MonoBehaviour
         timeSinceIncrease = Time.time;
         maxEnemies = 10;
         enemyCount = 0;
-        StartCoroutine(spawnMaxEnemies());
 
     }
 
@@ -24,6 +23,10 @@ public class GameStateController : MonoBehaviour
     {
         float nowTime = Time.time;
 
+        if (enemyCount == 0)
+        {
+            StartCoroutine(spawnMaxEnemies());
+        }
         
         if (nowTime - timeSinceIncrease > 60)
         {
@@ -48,4 +51,6 @@ public class GameStateController : MonoBehaviour
             yield return new WaitForSeconds(3);
         }
     }
+    
+    // todo: update this to reduce the enemy count when a skeleton is killed.
 }
