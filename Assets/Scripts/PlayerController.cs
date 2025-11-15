@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,10 +11,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 movementDirection;
     private Vector3 input;
     private float cooldown = 0;
-    private int exp, level, expToNextLevel;
+    private int exp, level, expToNextLevel, health, maxHealth;
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
+    public TextMeshProUGUI levelText;
     
     
     private void Start()
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
         exp = 0;
         level = 1;
         expToNextLevel = 100;
+        health = 100;
+        maxHealth = 100;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         cooldown -= Time.deltaTime;
         movementDirection = (transform.forward * input.z + transform.right * input.x).normalized;
         rb.rotation = Quaternion.Euler(0.0f, cameraTransform.eulerAngles.y, 0.0f);
+
     }
     
     private void FixedUpdate()
@@ -65,6 +70,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void takeDamage(int amount)
+    {
+        if (health - amount <= 0)
+        {
+            //TODO: Game over
+        }
+        else
+        {
+            health -= amount;
+        }
+    }
+
     private void Swing()
     {
         float radius = 3f;
@@ -85,6 +102,14 @@ public class PlayerController : MonoBehaviour
     {
         level++;
         expToNextLevel  += 50;
+        maxHealth += 10;
+        health = maxHealth;
+        SetText();
         Debug.Log("Level: "  + level);
+    }
+
+    private void SetText()
+    {
+        levelText.text = "Level: " + level;
     }
 }
