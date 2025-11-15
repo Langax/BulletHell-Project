@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
     public Button[] buttons;
+    public Slider healthBar, expBar;
     
     
     private void Start()
@@ -27,8 +28,8 @@ public class PlayerController : MonoBehaviour
         exp = 0;
         level = 1;
         expToNextLevel = 100;
-        health = 100;
         maxHealth = 100;
+        health = maxHealth;
         attackRange = 3f;
         swingCooldown = 3f;
 
@@ -36,6 +37,12 @@ public class PlayerController : MonoBehaviour
         buttons[1].gameObject.SetActive(false);
         buttons[2].gameObject.SetActive(false);
 
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+        expBar.maxValue = expToNextLevel;
+        expBar.value = exp;
+
+        SetText();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -72,10 +79,14 @@ public class PlayerController : MonoBehaviour
         if (exp + amount > expToNextLevel)
         {
             LevelUp();
+            expBar.maxValue = expToNextLevel;
+            expBar.value = exp;
         }
         else
         {
             exp += amount;
+            expBar.maxValue = expToNextLevel;
+            expBar.value = exp;
         }
     }
 
@@ -89,6 +100,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             health -= amount;
+            healthBar.value = health;
         }
     }
 
@@ -112,8 +124,12 @@ public class PlayerController : MonoBehaviour
     {
         level++;
         expToNextLevel  += 50;
+        exp = 0;
         maxHealth += 10;
         health = maxHealth;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = health;
+
         SetText();
 
         flipButtons();
@@ -163,6 +179,8 @@ public class PlayerController : MonoBehaviour
     public void increaseMaxHealth()
     {
         maxHealth += 20;
+        healthBar.maxValue = maxHealth;
+
         flipButtons();
         Time.timeScale = 1;
     }
