@@ -17,12 +17,4 @@ public class SkeletonMinionController : BaseEnemyAI
             attackCooldown = 3f;
         }
     }
-    
-    private void OnDrawGizmos()
-    {
-        Vector3 attackCenter = transform.position + transform.forward * 1.5f;
-        float attackRadius = 1.5f;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackCenter, attackRadius);
-    }
 }

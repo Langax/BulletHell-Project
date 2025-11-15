@@ -9,6 +9,7 @@ public class BaseEnemyAI : MonoBehaviour
     protected NavMeshAgent agent;
     protected GameObject player;
     protected virtual float range => 5f;
+    protected virtual int damage => 10;
     public int expValue = 10;
 
     void Start()
@@ -62,6 +63,7 @@ public class BaseEnemyAI : MonoBehaviour
             if (hit.CompareTag("Player"))
             {
                 Debug.Log("Hit the player!");
+                player.GetComponent<PlayerController>().takeDamage(damage);
             }
         }
         
@@ -70,7 +72,6 @@ public class BaseEnemyAI : MonoBehaviour
 
     public void TakeDamage()
     {
-        Debug.Log("I took damage!");
         //Health checks for stronger enemies here.
         player.GetComponent<PlayerController>().IncreaseExp(expValue);
         gameObject.SetActive(false);

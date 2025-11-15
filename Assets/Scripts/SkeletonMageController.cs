@@ -5,6 +5,8 @@ public class SkeletonMageController : BaseEnemyAI
 {
     private float attackCooldown = 0f;
     protected override float range => 20f;
+    protected override int damage => 20;
+    
     void Update()
     {
         attackCooldown -= Time.deltaTime;
@@ -14,6 +16,11 @@ public class SkeletonMageController : BaseEnemyAI
             agent.updatePosition = false;
             StartCoroutine(Attack());
             attackCooldown = 4f;
+            
+            Vector3 targetPos = player.transform.position;
+            targetPos.y = transform.position.y;
+            
+            transform.LookAt(targetPos);
         }
         else if (!CheckDistance())
         {
@@ -38,20 +45,12 @@ public class SkeletonMageController : BaseEnemyAI
             if (hit.CompareTag("Player"))
             {
                 Debug.Log("Hit the player!");
+                player.GetComponent<PlayerController>().takeDamage(damage);
             }
         }
         
         agent.isStopped = false;
     }
     
-    private void OnDrawGizmos()
-    {
-        Vector3 halfExtents = new Vector3(1f, 1f, range/2);
-        Vector3 center = transform.position + transform.forward * (range * 0.5f);
-
-        Gizmos.color = Color.red;
-        Gizmos.matrix = Matrix4x4.TRS(center, transform.rotation, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f);
-    }
 
 }
