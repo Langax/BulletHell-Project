@@ -14,8 +14,8 @@ public class GameStateController : MonoBehaviour
     {
         player =  GameObject.Find("Player");
         timeSinceIncrease = Time.time;
-        maxEnemies = 0;
-        enemyCount = 10;
+        maxEnemies = 10;
+        enemyCount = 0;
         StartCoroutine(spawnMaxEnemies());
 
     }

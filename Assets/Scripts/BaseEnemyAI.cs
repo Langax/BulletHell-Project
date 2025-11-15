@@ -72,7 +72,6 @@ public class BaseEnemyAI : MonoBehaviour
 
     public void TakeDamage()
     {
-        Debug.Log("I took damage!");
         //Health checks for stronger enemies here.
         player.GetComponent<PlayerController>().IncreaseExp(expValue);
         gameObject.SetActive(false);
