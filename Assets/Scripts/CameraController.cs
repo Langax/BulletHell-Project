@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform pivot;
     public Transform player;
-    public Vector3 offset = new Vector3(0, 2, -10);
+    public Vector3 offset = new Vector3(0, 1, -8);
 
     private float turnDelta;
     private float sens = 5f;
