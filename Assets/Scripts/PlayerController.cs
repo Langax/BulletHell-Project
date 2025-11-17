@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 input;
     private float cooldown, attackRange, swingCooldown;
     private int exp, level, expToNextLevel, health, maxHealth;
+    private Animator animator;
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
         buttons[2].gameObject.SetActive(false);
+        
+        animator = GetComponent<Animator>();
 
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
@@ -50,6 +53,15 @@ public class PlayerController : MonoBehaviour
     {
         cooldown -= Time.deltaTime;
         movementDirection = (transform.forward * input.z + transform.right * input.x).normalized;
+        if (movementDirection != Vector3.zero)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+        
         rb.rotation = Quaternion.Euler(0.0f, cameraTransform.eulerAngles.y, 0.0f);
 
     }
@@ -69,6 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         if (cooldown <= 0)
         {
+            animator.SetTrigger("SwingTrigger");
             Swing();
             cooldown = swingCooldown;
         }
