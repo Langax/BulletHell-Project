@@ -11,6 +11,7 @@ public class BaseEnemyAI : MonoBehaviour
     protected GameStateController gamestate;
     protected virtual float range => 5f;
     protected virtual int damage => 10;
+    protected Animator animator;
     public int expValue = 10;
 
     void Start()
@@ -19,6 +20,8 @@ public class BaseEnemyAI : MonoBehaviour
         gamestate = GameObject.Find("GameState").GetComponent<GameStateController>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+        animator = GetComponent<Animator>();
+
     }
 
     protected void MoveToPlayer()
@@ -32,6 +35,11 @@ public class BaseEnemyAI : MonoBehaviour
             
                 transform.LookAt(targetPos);
                 agent.SetDestination(player.transform.position);
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
             }
         }
     }
@@ -53,7 +61,7 @@ public class BaseEnemyAI : MonoBehaviour
     {
         Debug.Log("Enemy attacking.");
         agent.isStopped = true;
-        
+        animator.SetTrigger("Attacking");
         yield return new WaitForSeconds(1);
         
         float radius = 1.5f;
