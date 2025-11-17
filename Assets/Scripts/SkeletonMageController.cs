@@ -32,7 +32,7 @@ public class SkeletonMageController : BaseEnemyAI
     protected override IEnumerator Attack()
     {
         agent.isStopped = true;
-        
+        animator.SetTrigger("Attacking");
         yield return new WaitForSeconds(2);
 
         Vector3 halfextents = new Vector3(1f, 1f, range/2);
