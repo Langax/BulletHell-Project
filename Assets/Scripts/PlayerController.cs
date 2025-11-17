@@ -15,13 +15,14 @@ public class PlayerController : MonoBehaviour
     private float cooldown, attackRange, swingCooldown;
     private int exp, level, expToNextLevel, health, maxHealth;
     private Animator animator;
+    private AudioSource audioSource;
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
     public Button[] buttons;
     public Slider healthBar, expBar;
-    
+    public AudioClip swingSound;
     
     private void Start()
     {
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         expBar.maxValue = expToNextLevel;
         expBar.value = exp;
 
+        audioSource = GetComponent<AudioSource>();
         SetText();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour
         if (cooldown <= 0)
         {
             animator.SetTrigger("SwingTrigger");
+            audioSource.PlayOneShot(swingSound, 1.0f);
             Swing();
             cooldown = swingCooldown;
         }
