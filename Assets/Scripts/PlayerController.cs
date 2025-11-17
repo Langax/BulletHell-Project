@@ -15,11 +15,14 @@ public class PlayerController : MonoBehaviour
     private float cooldown, attackRange, swingCooldown;
     private int exp, level, expToNextLevel, health, maxHealth;
     private Animator animator;
-    private AudioSource audioSource;
+    private AudioSource audioSource; 
+    private bool interactButtonPressed, selectingChoice;
+
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI interactText;
     public Button[] buttons;
     public Slider healthBar, expBar;
     public AudioClip swingSound;
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
         buttons[2].gameObject.SetActive(false);
+        interactText.gameObject.SetActive(false);
         
         animator = GetComponent<Animator>();
 
@@ -90,10 +94,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void InteractInput(InputAction.CallbackContext context)
+    {
+        interactButtonPressed = true;
+    }
+
     public void IncreaseExp(int amount)
     {
         if (exp + amount > expToNextLevel)
         {
+            exp += amount;
             LevelUp();
             expBar.maxValue = expToNextLevel;
             expBar.value = exp;
@@ -139,19 +149,28 @@ public class PlayerController : MonoBehaviour
     private void LevelUp()
     {
         level++;
+        exp -= expToNextLevel;
         expToNextLevel  += 50;
-        exp = 0;
+        
+        SetText();
+        flipButtons();
+
+
+
         maxHealth += 10;
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
 
-        SetText();
+        if (exp >= expToNextLevel)
+        {
+            Debug.Log("Player can level up again!");
 
-        flipButtons();
+            LevelUp();
+        }
         Debug.Log("Level: "  + level);
     }
-
+    
     private void SetText()
     {
         levelText.text = "Level: " + level;
@@ -173,12 +192,14 @@ public class PlayerController : MonoBehaviour
         
         if (buttons[0].isActiveAndEnabled)
         {
+            selectingChoice = false;
             buttons[0].gameObject.SetActive(false);
             buttons[1].gameObject.SetActive(false);
             buttons[2].gameObject.SetActive(false);
         }
         else
         {
+            selectingChoice = true;
             buttons[0].gameObject.SetActive(true);
             buttons[1].gameObject.SetActive(true);
             buttons[2].gameObject.SetActive(true);
@@ -206,5 +227,17 @@ public class PlayerController : MonoBehaviour
         swingCooldown *= 0.8f;
         flipButtons();
         Time.timeScale = 1;
+    }
+
+    public bool Interact()
+    {
+        interactText.gameObject.SetActive(true);
+        if (interactButtonPressed)
+        {
+            interactText.gameObject.SetActive(false);
+            return true;
+        }
+
+        return false;
     }
 }
