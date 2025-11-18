@@ -9,8 +9,11 @@ public class BaseEnemyAI : MonoBehaviour
     protected NavMeshAgent agent;
     protected GameObject player;
     protected GameStateController gamestate;
-    protected virtual float range => 5f;
+    protected virtual float range => 4f;
     protected virtual int damage => 10;
+    protected int hitsUntilDeath = 1;
+    protected virtual float movementSpeed => 2f;
+
     protected Animator animator;
     public int expValue = 10;
 
@@ -20,6 +23,7 @@ public class BaseEnemyAI : MonoBehaviour
         gamestate = GameObject.Find("GameState").GetComponent<GameStateController>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
+        agent.speed = movementSpeed;
         animator = GetComponent<Animator>();
 
     }
@@ -34,6 +38,7 @@ public class BaseEnemyAI : MonoBehaviour
                 targetPos.y = transform.position.y;
             
                 transform.LookAt(targetPos);
+                
                 agent.SetDestination(player.transform.position);
                 animator.SetBool("isWalking", true);
             }
@@ -80,10 +85,14 @@ public class BaseEnemyAI : MonoBehaviour
 
     public void TakeDamage()
     {
-        //Health checks for stronger enemies here.
-        player.GetComponent<PlayerController>().IncreaseExp(expValue);
-        gameObject.SetActive(false);
-        gamestate.EnemyDied();
+        hitsUntilDeath -= 1;
+
+        if (hitsUntilDeath <= 0)
+        {
+            player.GetComponent<PlayerController>().IncreaseExp(expValue);
+            gameObject.SetActive(false);
+            gamestate.EnemyDied();
+        }
     }
 
 

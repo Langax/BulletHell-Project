@@ -6,6 +6,8 @@ public class SkeletonMageController : BaseEnemyAI
     private float attackCooldown = 0f;
     protected override float range => 20f;
     protected override int damage => 20;
+    protected override float movementSpeed => 1f;
+
     
     void Update()
     {
