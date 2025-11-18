@@ -70,6 +70,12 @@ public class PlayerController : MonoBehaviour
         
         rb.rotation = Quaternion.Euler(0.0f, cameraTransform.eulerAngles.y, 0.0f);
 
+        expBar.maxValue = expToNextLevel;
+        expBar.value = exp;
+        if (exp >= expToNextLevel && !selectingChoice) 
+        {
+            LevelUp();
+        }
     }
     
     private void FixedUpdate()
@@ -101,19 +107,8 @@ public class PlayerController : MonoBehaviour
 
     public void IncreaseExp(int amount)
     {
-        if (exp + amount > expToNextLevel)
-        {
-            exp += amount;
-            LevelUp();
-            expBar.maxValue = expToNextLevel;
-            expBar.value = exp;
-        }
-        else
-        {
-            exp += amount;
-            expBar.maxValue = expToNextLevel;
-            expBar.value = exp;
-        }
+        exp += amount;
+
     }
 
     public void takeDamage(int amount)
@@ -154,20 +149,13 @@ public class PlayerController : MonoBehaviour
         
         SetText();
         flipButtons();
-
-
-
+        
+        
         maxHealth += 10;
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
-
-        if (exp >= expToNextLevel)
-        {
-            Debug.Log("Player can level up again!");
-
-            LevelUp();
-        }
+        
         Debug.Log("Level: "  + level);
     }
     

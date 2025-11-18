@@ -7457,6 +7457,7 @@ MonoBehaviour:
   movementSpeed: 350
   cameraTransform: {fileID: 595221860}
   levelText: {fileID: 2122133582}
+  interactText: {fileID: 491810390}
   buttons:
   - {fileID: 907509003}
   - {fileID: 987095151}
