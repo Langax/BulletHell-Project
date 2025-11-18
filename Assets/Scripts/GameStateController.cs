@@ -1,9 +1,12 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameStateController : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    public GameObject skeletonMinion;
+    public GameObject skeletonMage;
+    public GameObject skeletonWarrior;
     
     private GameObject player;
     private int maxEnemies;
@@ -39,17 +42,40 @@ public class GameStateController : MonoBehaviour
     {
         while(true)
         {
+            int enemyType =  Random.Range(0, 10);
             if (enemyCount < maxEnemies)
             {
-                Vector3 direction = Random.insideUnitCircle.normalized;
-                float dist = Random.Range(20, 30);
-                Vector3 pos = player.transform.position + new Vector3(direction.x, 0, direction.y) * dist;
-                
-                Instantiate(enemyPrefab, pos, Quaternion.identity);
-                enemyCount++;
+                switch (enemyType)
+                {
+                    case 0:
+                        SpawnEnemy(skeletonMage);
+                        break;
+                    case 1:
+                        SpawnEnemy(skeletonMage);
+                        break;
+                    case 2:
+                        SpawnEnemy(skeletonWarrior);
+                        break;
+                    case 3:
+                        SpawnEnemy(skeletonWarrior);
+                        break;
+                    default:
+                        SpawnEnemy(skeletonMinion);
+                        break;
+                }
             }
             yield return new WaitForSeconds(1);
         }
+    }
+
+    void SpawnEnemy(GameObject enemyPrefab)
+    {
+        Vector3 direction = Random.insideUnitCircle.normalized;
+        float dist = Random.Range(20, 30);
+        Vector3 pos = player.transform.position + new Vector3(direction.x, 0, direction.y) * dist;
+                
+        Instantiate(enemyPrefab, pos, Quaternion.identity);
+        enemyCount++;
     }
 
     public void EnemyDied()
