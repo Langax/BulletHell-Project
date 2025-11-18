@@ -59,7 +59,6 @@ public class BaseEnemyAI : MonoBehaviour
 
     protected virtual IEnumerator Attack()
     {
-        Debug.Log("Enemy attacking.");
         agent.isStopped = true;
         animator.SetTrigger("Attacking");
         yield return new WaitForSeconds(1);
@@ -72,7 +71,6 @@ public class BaseEnemyAI : MonoBehaviour
         {
             if (hit.CompareTag("Player"))
             {
-                Debug.Log("Hit the player!");
                 player.GetComponent<PlayerController>().takeDamage(damage);
             }
         }
