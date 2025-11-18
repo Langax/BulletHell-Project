@@ -223,6 +223,7 @@ public class PlayerController : MonoBehaviour
         if (interactButtonPressed)
         {
             interactText.gameObject.SetActive(false);
+            interactButtonPressed = false;
             return true;
         }
 
