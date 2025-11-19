@@ -14,36 +14,39 @@ public class NPCController : MonoBehaviour
 
     void Update()
     {
+        bool playerInRange = false;
+    
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRadius);
         foreach (Collider hit in hits)
         {
-            if (hit.CompareTag("Player") && !runningInteraction)
+            if (hit.CompareTag("Player"))
             {
-                StartCoroutine(Interaction());
+                playerInRange = true;
+                playerController.interactText.gameObject.SetActive(true);
+                break;
             }
         }
+
+        if (playerInRange && !runningInteraction && playerController.Interact())
+        {
+            StartCoroutine(Interaction());
+        }
     }
+
 
     IEnumerator Interaction()
     {
         runningInteraction = true;
-        bool interactCheck = playerController.Interact();
-        
-        if (interactCheck)
-        {
-            // Speak some dialog
-            // give the player some exp
-            // disappear
-            int expAmount = Random.Range(0, 1000);
-            playerController.IncreaseExp(expAmount);
-            Debug.Log("Player got: " + expAmount + " Exp!");
-            yield return new WaitForSeconds(1);
-            runningInteraction = false;
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            runningInteraction = false;
-        }
+
+        // Speak some dialog
+        // give the player some exp
+        // disappear
+        runningInteraction = false;
+        int expAmount = Random.Range(300, 1000);
+        playerController.IncreaseExp(expAmount);
+        Debug.Log("Player got: " + expAmount + " Exp!");
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
+        playerController.interactText.gameObject.SetActive(false);
     }
 }
