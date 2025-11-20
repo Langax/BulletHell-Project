@@ -11,7 +11,7 @@ public class BaseEnemyAI : MonoBehaviour
     protected GameStateController gamestate;
     protected virtual float range => 4f;
     protected virtual int damage => 10;
-    protected int hitsUntilDeath = 1;
+    public int hitsUntilDeath = 1;
     protected virtual float movementSpeed => 2f;
 
     protected Animator animator;

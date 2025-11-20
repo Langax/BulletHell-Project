@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315d792767ffd3a42b2949aaad679ce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitsUntilDeath: 3
   expValue: 30
 --- !u!195 &647019288257694846
 NavMeshAgent:
