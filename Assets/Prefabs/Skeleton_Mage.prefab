@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitsUntilDeath: 2
   expValue: 20
+  meteorPrefab: {fileID: 8190532200205727727, guid: 30186b113bc62dd40ab7820cef880184, type: 3}
 --- !u!195 &7432718592972473428
 NavMeshAgent:
   m_ObjectHideFlags: 0
