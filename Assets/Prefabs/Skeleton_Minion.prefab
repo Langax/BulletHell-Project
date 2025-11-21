@@ -120,6 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8baf6397cff114aaca05bd68d6bc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitsUntilDeath: 1
+  blood: {fileID: 3609855830742581686, guid: 360ffd0754a395b4084bbca174f68f6b, type: 3}
   expValue: 10
 --- !u!195 &2641615014272917891
 NavMeshAgent:

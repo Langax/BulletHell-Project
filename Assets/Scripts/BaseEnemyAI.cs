@@ -12,6 +12,7 @@ public class BaseEnemyAI : MonoBehaviour
     protected virtual float range => 4f;
     protected virtual int damage => 10;
     public int hitsUntilDeath = 1;
+    public GameObject blood;
     protected virtual float movementSpeed => 2f;
 
     protected Animator animator;
@@ -86,7 +87,7 @@ public class BaseEnemyAI : MonoBehaviour
     public void TakeDamage()
     {
         hitsUntilDeath -= 1;
-
+        Instantiate(blood, transform.position, Quaternion.identity);
         if (hitsUntilDeath <= 0)
         {
             player.GetComponent<PlayerController>().IncreaseExp(expValue);

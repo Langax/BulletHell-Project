@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitsUntilDeath: 3
+  blood: {fileID: 3609855830742581686, guid: 360ffd0754a395b4084bbca174f68f6b, type: 3}
   expValue: 30
 --- !u!195 &647019288257694846
 NavMeshAgent:
