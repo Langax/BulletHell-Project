@@ -4,6 +4,7 @@ using UnityEngine;
 public class SkeletonMageController : BaseEnemyAI
 {
     private float attackCooldown = 0f;
+    public GameObject meteorPrefab;
     protected override float range => 20f;
     protected override int damage => 20;
     protected override float movementSpeed => 1f;
@@ -33,9 +34,11 @@ public class SkeletonMageController : BaseEnemyAI
 
     protected override IEnumerator Attack()
     {
+        
         agent.isStopped = true;
         animator.SetTrigger("Attacking");
         yield return new WaitForSeconds(2);
+        /*
 
         Vector3 halfextents = new Vector3(1f, 1f, range/2);
         Vector3 center = transform.position + transform.forward * (range * 0.5f);
@@ -49,7 +52,12 @@ public class SkeletonMageController : BaseEnemyAI
                 player.GetComponent<PlayerController>().takeDamage(damage);
             }
         }
-        
+        */
+
+        Vector3 spawnPos = new Vector3(player.transform.position.x, player.transform.position.y + 50, player.transform.position.z);
+        Quaternion spawnRot = Quaternion.identity;
+        Instantiate(meteorPrefab, spawnPos, spawnRot);
+
         agent.isStopped = false;
     }
     
