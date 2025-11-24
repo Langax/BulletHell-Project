@@ -7,11 +7,13 @@ public class GameStateController : MonoBehaviour
     public GameObject skeletonMinion;
     public GameObject skeletonMage;
     public GameObject skeletonWarrior;
+    public GameObject skeletonArcher;
     
     private GameObject player;
     private int maxEnemies;
     private float timeSinceIncrease;
     private int enemyCount;
+    private float timeBetweenSpawn = 2f;
     
     void Start()
     {
@@ -34,6 +36,7 @@ public class GameStateController : MonoBehaviour
         if (nowTime - timeSinceIncrease > 60)
         {
             maxEnemies += 10;
+            timeBetweenSpawn -= 0.2f;
             timeSinceIncrease = Time.time;
         }
     }
@@ -42,7 +45,7 @@ public class GameStateController : MonoBehaviour
     {
         while(true)
         {
-            int enemyType =  Random.Range(0, 10);
+            int enemyType =  Random.Range(0, 20);
             if (enemyCount < maxEnemies)
             {
                 switch (enemyType)
@@ -51,20 +54,20 @@ public class GameStateController : MonoBehaviour
                         SpawnEnemy(skeletonMage);
                         break;
                     case 1:
-                        SpawnEnemy(skeletonMage);
+                        SpawnEnemy(skeletonWarrior);
                         break;
                     case 2:
-                        SpawnEnemy(skeletonWarrior);
+                        SpawnEnemy(skeletonArcher);
                         break;
                     case 3:
-                        SpawnEnemy(skeletonWarrior);
+                        SpawnEnemy(skeletonArcher);
                         break;
                     default:
                         SpawnEnemy(skeletonMinion);
                         break;
                 }
             }
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(timeBetweenSpawn);
         }
     }
 
