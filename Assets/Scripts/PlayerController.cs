@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
         
-        rb.rotation = Quaternion.Euler(0.0f, cameraTransform.eulerAngles.y, 0.0f);
+        transform.rotation = Quaternion.Euler(0.0f, cameraTransform.eulerAngles.y, 0.0f);
 
         expBar.maxValue = expToNextLevel;
         expBar.value = exp;
