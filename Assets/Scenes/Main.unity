@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 14368955}
   - component: {fileID: 14368954}
   - component: {fileID: 14368953}
+  - component: {fileID: 14368956}
   m_Layer: 5
   m_Name: Option 3
   m_TagString: Untagged
@@ -202,9 +203,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 964358775}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: increaseMaxHealth
+      - m_Target: {fileID: 14368956}
+        m_TargetAssemblyTypeName: LevelUpButtonController, Assembly-CSharp
+        m_MethodName: levelUpOption1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -252,6 +253,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 14368951}
   m_CullTransparentMesh: 1
+--- !u!114 &14368956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14368951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44f2a47bc7b1b34da4b4c52ab93fd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonText: {fileID: 597598676}
 --- !u!1001 &15389215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8880,6 +8894,7 @@ GameObject:
   - component: {fileID: 907509005}
   - component: {fileID: 907509004}
   - component: {fileID: 907509003}
+  - component: {fileID: 907509006}
   m_Layer: 5
   m_Name: Option 1
   m_TagString: Untagged
@@ -8951,9 +8966,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 964358775}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: increaseAttackRange
+      - m_Target: {fileID: 907509006}
+        m_TargetAssemblyTypeName: LevelUpButtonController, Assembly-CSharp
+        m_MethodName: levelUpOption1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9001,6 +9016,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907509001}
   m_CullTransparentMesh: 1
+--- !u!114 &907509006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907509001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44f2a47bc7b1b34da4b4c52ab93fd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonText: {fileID: 1821595350}
 --- !u!1001 &911731299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9480,10 +9508,10 @@ MonoBehaviour:
   cameraTransform: {fileID: 595221860}
   levelText: {fileID: 2122133582}
   interactText: {fileID: 491810390}
-  buttons:
-  - {fileID: 907509003}
-  - {fileID: 987095151}
-  - {fileID: 14368953}
+  option1: {fileID: 907509006}
+  option2: {fileID: 987095154}
+  option3: {fileID: 14368956}
+  selectingChoice: 0
   healthBar: {fileID: 1176858455}
   expBar: {fileID: 1329542014}
   swingSound: {fileID: 8300000, guid: 97e9f31a4ea76e249b103cdc79a8bc17, type: 3}
@@ -9941,6 +9969,7 @@ GameObject:
   - component: {fileID: 987095153}
   - component: {fileID: 987095152}
   - component: {fileID: 987095151}
+  - component: {fileID: 987095154}
   m_Layer: 5
   m_Name: Option 2
   m_TagString: Untagged
@@ -10012,9 +10041,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 964358775}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: increaseAttackSpeed
+      - m_Target: {fileID: 987095154}
+        m_TargetAssemblyTypeName: LevelUpButtonController, Assembly-CSharp
+        m_MethodName: levelUpOption1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10062,6 +10091,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987095149}
   m_CullTransparentMesh: 1
+--- !u!114 &987095154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987095149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44f2a47bc7b1b34da4b4c52ab93fd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonText: {fileID: 427426828}
 --- !u!1 &1003965458
 GameObject:
   m_ObjectHideFlags: 0

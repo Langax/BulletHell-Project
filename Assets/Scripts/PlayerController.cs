@@ -12,18 +12,19 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movementDirection;
     private Vector3 input;
+    private Animator animator;
+    private AudioSource audioSource;
+    private bool interactButtonPressed;
     private float cooldown, attackRange, swingCooldown;
     private int exp, level, expToNextLevel, health, maxHealth;
-    private Animator animator;
-    private AudioSource audioSource; 
-    private bool interactButtonPressed, selectingChoice;
-
     
     public int movementSpeed = 5;
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI interactText;
-    public Button[] buttons;
+    public LevelUpButtonController option1, option2, option3;
+    public bool selectingChoice = false;
+
     public Slider healthBar, expBar;
     public AudioClip swingSound;
     
@@ -38,9 +39,6 @@ public class PlayerController : MonoBehaviour
         attackRange = 3f;
         swingCooldown = 3f;
 
-        buttons[0].gameObject.SetActive(false);
-        buttons[1].gameObject.SetActive(false);
-        buttons[2].gameObject.SetActive(false);
         interactText.gameObject.SetActive(false);
         
         animator = GetComponent<Animator>();
@@ -148,8 +146,7 @@ public class PlayerController : MonoBehaviour
         expToNextLevel  += 50;
         
         SetText();
-        flipButtons();
-        
+        flipCards();
         
         maxHealth += 10;
         health = maxHealth;
@@ -158,63 +155,30 @@ public class PlayerController : MonoBehaviour
         
         Debug.Log("Level: "  + level);
     }
-    
-    private void SetText()
-    {
-        levelText.text = "Level: " + level;
-    }
 
-    private void flipButtons()
+    public void flipCards()
     {
-        Time.timeScale = 0;
-        
-        if (Cursor.lockState == CursorLockMode.Locked)
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            
-        }
-        
-        if (buttons[0].isActiveAndEnabled)
+        option1.flip();
+        option2.flip();
+        option3.flip();
+        if (selectingChoice)
         {
             selectingChoice = false;
-            buttons[0].gameObject.SetActive(false);
-            buttons[1].gameObject.SetActive(false);
-            buttons[2].gameObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
         }
         else
         {
             selectingChoice = true;
-            buttons[0].gameObject.SetActive(true);
-            buttons[1].gameObject.SetActive(true);
-            buttons[2].gameObject.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
         }
+
     }
-
-    public void increaseAttackRange()
+    
+    private void SetText()
     {
-        attackRange *= 1.1f;
-        flipButtons();
-        Time.timeScale = 1;
-    }
-
-    public void increaseMaxHealth()
-    {
-        maxHealth += 20;
-        healthBar.maxValue = maxHealth;
-
-        flipButtons();
-        Time.timeScale = 1;
-    }
-
-    public void increaseAttackSpeed()
-    {
-        swingCooldown *= 0.8f;
-        flipButtons();
-        Time.timeScale = 1;
+        levelText.text = "Level: " + level;
     }
 
     public bool Interact()
@@ -229,5 +193,20 @@ public class PlayerController : MonoBehaviour
             interactButtonPressed = false;
             return false;
         }
+    }
+
+    public void increaseMaxHP(int amount)
+    {
+        maxHealth += amount;
+    }
+
+    public void increaseAttackRange(float amount)
+    {
+        swingCooldown *= amount;
+    }
+
+    public void increaseAttackSpeed(float amount)
+    {
+        swingCooldown /= amount;
     }
 }
