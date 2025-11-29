@@ -49,8 +49,8 @@ public class LevelUpButtonController : MonoBehaviour
                 statName = "Attack Range";
                 break;
             case 2:
-                increaseAmount = Random.Range(1, 51);
-                buttonText.text = "Increase Attack Speed \n\n+" + increaseAmount + "%";
+                increaseAmount = Random.Range(70, 101);
+                buttonText.text = "Decrease Attack Cooldown \n\n-" + (100 - increaseAmount) + "%";
                 statName = "Attack Speed";
                 break;
             case 3:
@@ -74,7 +74,7 @@ public class LevelUpButtonController : MonoBehaviour
                 PC.increaseAttackRange((increaseAmount / 100) + 1);
                 break;
             case "Attack Speed":
-                PC.increaseAttackSpeed((increaseAmount / 100) + 1);  ;
+                PC.increaseAttackSpeed(increaseAmount / 100);
                 break;
             case "Exp Bonus":
                 PC.IncreaseExp((int)increaseAmount);

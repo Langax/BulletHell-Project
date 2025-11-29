@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public int movementSpeed = 5;
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
-    public TextMeshProUGUI interactText;
     public LevelUpButtonController option1, option2, option3;
     public bool selectingChoice = false;
 
@@ -38,8 +37,6 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         attackRange = 3f;
         swingCooldown = 3f;
-
-        interactText.gameObject.SetActive(false);
         
         animator = GetComponent<Animator>();
 
@@ -100,7 +97,14 @@ public class PlayerController : MonoBehaviour
 
     public void InteractInput(InputAction.CallbackContext context)
     {
-        interactButtonPressed = true;
+        if (context.performed)
+        {
+            interactButtonPressed = true;
+        }
+        else
+        {
+            interactButtonPressed = false;
+        }
     }
 
     public void IncreaseExp(int amount)
@@ -188,11 +192,10 @@ public class PlayerController : MonoBehaviour
             interactButtonPressed = false;
             return true;
         }
-        else
-        {
-            interactButtonPressed = false;
-            return false;
-        }
+
+        interactButtonPressed = false;
+        return false;
+
     }
 
     public void increaseMaxHP(int amount)
@@ -207,6 +210,6 @@ public class PlayerController : MonoBehaviour
 
     public void increaseAttackSpeed(float amount)
     {
-        swingCooldown /= amount;
+        swingCooldown *= amount;
     }
 }
