@@ -59,7 +59,7 @@ public class NPCController : MonoBehaviour
         // disappear
         runningInteraction = false;
         int expAmount = Random.Range(300, 1000);
-        playerController.IncreaseExp(expAmount);
+        playerController.increaseExp(expAmount);
         Debug.Log("Player got: " + expAmount + " Exp!");
         yield return new WaitForSeconds(1);
     }

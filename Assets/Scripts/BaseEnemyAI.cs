@@ -90,7 +90,7 @@ public class BaseEnemyAI : MonoBehaviour
         Instantiate(blood, transform.position, Quaternion.identity);
         if (hitsUntilDeath <= 0)
         {
-            player.GetComponent<PlayerController>().IncreaseExp(expValue);
+            player.GetComponent<PlayerController>().increaseExp(expValue);
             gameObject.SetActive(false);
             gamestate.EnemyDied();
         }

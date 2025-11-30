@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource;
     private bool interactButtonPressed;
-    private float cooldown, attackRange, swingCooldown;
+    private float cooldown, attackRange, swingCooldown, expBonus;
     private int exp, level, expToNextLevel, health, maxHealth;
     
     public int movementSpeed = 5;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public LevelUpButtonController option1, option2, option3;
     public bool selectingChoice = false;
 
-    public Slider healthBar, expBar;
+    public Slider healthBar, expBar, swingBar;
     public AudioClip swingSound;
     
     private void Start()
@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         attackRange = 3f;
         swingCooldown = 3f;
+        expBonus = 1f;
         
         animator = GetComponent<Animator>();
 
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         healthBar.value = health;
         expBar.maxValue = expToNextLevel;
         expBar.value = exp;
+ 
 
         audioSource = GetComponent<AudioSource>();
         SetText();
@@ -53,6 +55,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         cooldown -= Time.deltaTime;
+        swingBar.maxValue = swingCooldown;
+        swingBar.value = cooldown;
+        
         movementDirection = (transform.forward * input.z + transform.right * input.x).normalized;
         if (movementDirection != Vector3.zero)
         {
@@ -107,11 +112,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void IncreaseExp(int amount)
-    {
-        exp += amount;
 
-    }
 
     public void takeDamage(int amount)
     {
@@ -211,5 +212,15 @@ public class PlayerController : MonoBehaviour
     public void increaseAttackSpeed(float amount)
     {
         swingCooldown *= amount;
+    }
+
+    public void increaseExpBonus(float amount)
+    {
+        expBonus += amount;
+    }
+    
+    public void increaseExp(int amount)
+    {
+        exp += (int)(amount * expBonus);
     }
 }
