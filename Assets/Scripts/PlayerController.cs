@@ -22,11 +22,13 @@ public class PlayerController : MonoBehaviour
     public Transform cameraTransform;
     public TextMeshProUGUI levelText;
     public LevelUpButtonController option1, option2, option3;
-    public bool selectingChoice = false;
+    public bool selectingChoice;
+    public bool testMode = false;
 
     public Slider healthBar, expBar, swingBar;
     public AudioClip swingSound;
     
+    /* Initialize default values */
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,8 +52,17 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         SetText();
         Cursor.lockState = CursorLockMode.Locked;
+
+
+        if (testMode)
+        {
+            maxHealth = 10000;
+            health = maxHealth;
+            expBonus = 100;
+        }
     }
 
+    /* Update Swing cooldown & Exp bars, apply movement Animation & rotation (same as the camera rotation) */
     private void Update()
     {
         cooldown -= Time.deltaTime;
@@ -72,23 +83,28 @@ public class PlayerController : MonoBehaviour
 
         expBar.maxValue = expToNextLevel;
         expBar.value = exp;
+        
+        /* If they have enough exp to level up and aren't already in the level up menu, level up */
         if (exp >= expToNextLevel && !selectingChoice) 
         {
             LevelUp();
         }
     }
     
+    /* Apply the movement as linearVelocity */
     private void FixedUpdate()
     {
         Vector3 velocity = movementDirection * (movementSpeed * Time.deltaTime);
         rb.linearVelocity = new Vector3(velocity.x, 0.0f, velocity.z);
     }
 
+    /* Read the input value to determine direction */
     public void Move(InputAction.CallbackContext context)
     {
         input = context.ReadValue<Vector3>();
     }
 
+    /* Event function called on left click, if not already on cooldown, play the animation, audio clip and call the Swing function, then apply cooldown */
     public void Attack(InputAction.CallbackContext context)
     {
         if (cooldown <= 0)
@@ -100,6 +116,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /* Event function called on F input, sets a variable used later on so the NPC can determine whether the input was pressed whilst in range or not */
     public void InteractInput(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -111,9 +128,21 @@ public class PlayerController : MonoBehaviour
             interactButtonPressed = false;
         }
     }
+    
+    /* public function to return true or false depending on if the player recently hit the interact key, used inside the NPC controller */
+    public bool Interact()
+    {
+        if (interactButtonPressed)
+        {
+            interactButtonPressed = false;
+            return true;
+        }
 
-
-
+        interactButtonPressed = false;
+        return false;
+    }
+    
+    /* Public function to cause damage on the player, kill the player if their health will fall below 0 from the attack */
     public void takeDamage(int amount)
     {
         if (health - amount <= 0)
@@ -128,6 +157,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /* Create an overlap sphere slightly in front of the player and cause damage on any enemies that were inside */
     private void Swing()
     {
         float radius = attackRange;
@@ -144,6 +174,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /* Increment the level variable and increase the amount of exp for the next level, update the level text / Health bar & Flip the level up cards */
     private void LevelUp()
     {
         level++;
@@ -157,10 +188,9 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = health;
-        
-        Debug.Log("Level: "  + level);
     }
 
+    /* Flip each option and swap the selectingChoice variable, which will re-lock the cursor and set the time-scale back to normal*/
     public void flipCards()
     {
         option1.flip();
@@ -181,44 +211,37 @@ public class PlayerController : MonoBehaviour
 
     }
     
+    /* Update level text */
     private void SetText()
     {
         levelText.text = "Level: " + level;
     }
-
-    public bool Interact()
-    {
-        if (interactButtonPressed)
-        {
-            interactButtonPressed = false;
-            return true;
-        }
-
-        interactButtonPressed = false;
-        return false;
-
-    }
-
+    
+    /* Public function to increase the max HP */
     public void increaseMaxHP(int amount)
     {
         maxHealth += amount;
     }
 
+    /* Public function to increase the attack range */
     public void increaseAttackRange(float amount)
     {
         swingCooldown *= amount;
     }
 
+    /* Public function to decrease the swing cooldown */
     public void increaseAttackSpeed(float amount)
     {
         swingCooldown *= amount;
     }
 
+    /* Public function to increase the exp bonus */
     public void increaseExpBonus(float amount)
     {
         expBonus += amount;
     }
     
+    /* Public function to increase the exp by a certain amount * expBonus */
     public void increaseExp(int amount)
     {
         exp += (int)(amount * expBonus);

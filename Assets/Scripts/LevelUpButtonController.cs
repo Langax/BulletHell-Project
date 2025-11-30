@@ -5,19 +5,21 @@ using UnityEngine.UI;
 
 public class LevelUpButtonController : MonoBehaviour
 {
+    /* Variable declaration */
     public TextMeshProUGUI buttonText;
-
     private PlayerController PC;
     private float selectedStat;
     private float increaseAmount;
     private string statName;
     
+    /* Initialize default values */
     void Start()
     {
         gameObject.SetActive(false);
         PC =  GameObject.Find("Player").GetComponent<PlayerController>();
     }
     
+    /* if it's active already then deactivate, otherwise activate and randomize the options */
     public void flip()
     {
         
@@ -32,6 +34,7 @@ public class LevelUpButtonController : MonoBehaviour
         }
     }
 
+    /* Picks a random stat to increase and rolls a random value for it, then sets the text for that card appropriately */
     void randomizeOptions()
     {
         int randOption = Random.Range(0, 4);
@@ -63,6 +66,7 @@ public class LevelUpButtonController : MonoBehaviour
         }
     }
     
+    /* Depending on which stat was picked from randomizeOptions(), call the correct function from the PlayerController, then flip the cards again (this is called on button press) */
     public void levelUpOption1()
     {
         switch (statName)

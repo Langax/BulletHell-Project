@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class MeteorController : MonoBehaviour
 {
+    /* Variable declaration */
     Rigidbody rb;
     public float floorHeight = 0.7f;
+    
+    /* Add a downwards force of -50.0f when the meteor is spawned */
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.AddForce(0.0f, -50.0f, 0.0f);
     }
 
+    /* If it hits a player when it falls, destroy itself and apply damage to the player, if it hits the ground, Expand() */
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -24,6 +28,7 @@ public class MeteorController : MonoBehaviour
         }
     }
 
+    /* Increases the size of the meteor rapidly for an explosion effect, resets the position to the floor height to avoid falling into the ground each size increase */
     private IEnumerator expand()
     {
         for (int i = 0; i < 100; i++)
