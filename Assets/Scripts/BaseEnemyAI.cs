@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class BaseEnemyAI : MonoBehaviour
 {
+    /* Variable declaration, certain variables may be overriden, this Base class is intended to be overriden but doesn't need to be */
     protected NavMeshAgent agent;
     protected GameObject player;
     protected GameStateController gamestate;
@@ -18,6 +19,7 @@ public class BaseEnemyAI : MonoBehaviour
     protected Animator animator;
     public int expValue = 10;
 
+    /* Set default values */
     void Start()
     {
         player = GameObject.Find("Player");
@@ -26,15 +28,16 @@ public class BaseEnemyAI : MonoBehaviour
         agent.updateRotation = false;
         agent.speed = movementSpeed;
         animator = GetComponent<Animator>();
-
     }
 
+    /* As long as the player exists and the enemy is out of range, face towards the player and move there */
     protected void MoveToPlayer()
     {
         if (player)
         {
             if (!CheckDistance())
             {
+                /* Face only the Y to avoid looking down at the players feet when getting too close */
                 Vector3 targetPos = player.transform.position;
                 targetPos.y = transform.position.y;
             
@@ -50,6 +53,7 @@ public class BaseEnemyAI : MonoBehaviour
         }
     }
 
+    /* Returns true or false depending on the distance between the enemy and player, if it's less than the range then return true */
     protected bool CheckDistance()
     {
         if (player)
@@ -63,6 +67,7 @@ public class BaseEnemyAI : MonoBehaviour
         return false;
     }
 
+    /* Default attack, creates an overlapSphere slightly in front of the enemy and causes damage on the player if it hits */
     protected virtual IEnumerator Attack()
     {
         agent.isStopped = true;
@@ -84,17 +89,17 @@ public class BaseEnemyAI : MonoBehaviour
         agent.isStopped = false;
     }
 
+    /* Public function for when an enemy is hit, reduce their health (hitsUntilDeath) by 1, if they have no health left, give the player exp and destroy self
+     then update gamestate to reflect the current enemy count */
     public void TakeDamage()
     {
         hitsUntilDeath -= 1;
         Instantiate(blood, transform.position, Quaternion.identity);
         if (hitsUntilDeath <= 0)
         {
-            player.GetComponent<PlayerController>().IncreaseExp(expValue);
+            player.GetComponent<PlayerController>().increaseExp(expValue);
             gameObject.SetActive(false);
             gamestate.EnemyDied();
         }
     }
-
-
 }

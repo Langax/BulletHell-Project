@@ -3,9 +3,11 @@ using UnityEngine.AI;
 
 public class SkeletonMinionController : BaseEnemyAI
 {
-    private float attackCooldown = 0f;
+    /* Basic class derived from BaseEnemyAI */
+
+    private float attackCooldown;
     
-    
+    /* Move to the player, once in range and the attack is off cooldown, trigger the inherited attack */
     private void Update()
     {
         attackCooldown -= Time.deltaTime;

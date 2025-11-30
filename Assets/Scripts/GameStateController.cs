@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameStateController : MonoBehaviour
 {
+    /* Variable declaration */
     public GameObject skeletonMinion;
     public GameObject skeletonMage;
     public GameObject skeletonWarrior;
@@ -15,23 +16,22 @@ public class GameStateController : MonoBehaviour
     private int enemyCount;
     private float timeBetweenSpawn = 2f;
     
+    /* Initialize default values */
     void Start()
     {
         player =  GameObject.Find("Player");
         timeSinceIncrease = Time.time;
         maxEnemies = 10;
         enemyCount = 0;
-
+        
+        /* Begin an infinite loop to keep spawning enemies */
+        StartCoroutine(SpawnMaxEnemies());
     }
 
+    /* Every 60 seconds, increase the amount of max enemies, and decrease the time between the spawning */
     void Update()
     {
         float nowTime = Time.time;
-
-        if (enemyCount == 0)
-        {
-            StartCoroutine(SpawnMaxEnemies());
-        }
         
         if (nowTime - timeSinceIncrease > 60)
         {
@@ -41,6 +41,7 @@ public class GameStateController : MonoBehaviour
         }
     }
 
+    /* Randomly pick an enemy type, and call the spawn function for it, then wait before spawning the next one */
     IEnumerator SpawnMaxEnemies()
     {
         while(true)
@@ -71,6 +72,7 @@ public class GameStateController : MonoBehaviour
         }
     }
 
+    /* Spawn an enemy in a random direction from the player at a distance of 20-30 units away, then increase the enemy count */
     void SpawnEnemy(GameObject enemyPrefab)
     {
         Vector3 direction = Random.insideUnitCircle.normalized;
@@ -81,6 +83,7 @@ public class GameStateController : MonoBehaviour
         enemyCount++;
     }
 
+    /* Decrement enemyCount to keep it accurate */
     public void EnemyDied()
     {
         enemyCount--;
